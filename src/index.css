@@ -2,41 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Facebook Business Dashboard Design System 
+All colors MUST be HSL. Professional blue-purple gradient theme.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Base colors */
+    --background: 245 50% 98%;
+    --foreground: 215 25% 15%;
 
+    /* Card system */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 215 25% 15%;
 
+    /* Popover */
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 215 25% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Facebook-inspired primary (blue) */
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 221 83% 48%;
+    --primary-light: 221 83% 95%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary purple accent */
+    --secondary: 270 60% 60%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 270 60% 55%;
+    --secondary-light: 270 60% 95%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted tones */
+    --muted: 215 20% 96%;
+    --muted-foreground: 215 15% 55%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent colors */
+    --accent: 215 20% 96%;
+    --accent-foreground: 215 25% 15%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Status colors */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 45 93% 47%;
+    --warning-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Border and inputs */
+    --border: 215 20% 88%;
+    --input: 215 20% 95%;
+    --ring: 221 83% 53%;
 
-    --radius: 0.5rem;
+    /* Layout */
+    --radius: 0.75rem;
+
+    /* Custom gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(221 83% 53%), hsl(270 60% 60%));
+    --gradient-secondary: linear-gradient(135deg, hsl(270 60% 60%), hsl(221 83% 53%));
+    --gradient-subtle: linear-gradient(135deg, hsl(215 20% 98%), hsl(221 83% 97%));
+    --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+
+    /* Shadows */
+    --shadow-sm: 0 2px 4px -1px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px -2px rgba(0,0,0,0.08);
+    --shadow-lg: 0 10px 24px -4px rgba(0,0,0,0.1);
+    --shadow-primary: 0 8px 24px -4px hsl(221 83% 53% / 0.2);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
@@ -56,33 +90,59 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Base colors */
+    --background: 215 30% 8%;
+    --foreground: 215 20% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    /* Card system */
+    --card: 215 25% 12%;
+    --card-foreground: 215 20% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    /* Popover */
+    --popover: 215 25% 12%;
+    --popover-foreground: 215 20% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    /* Primary adjustments for dark */
+    --primary: 221 83% 58%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 221 83% 63%;
+    --primary-light: 221 83% 15%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    /* Secondary adjustments for dark */
+    --secondary: 270 60% 65%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-hover: 270 60% 70%;
+    --secondary-light: 270 60% 15%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    /* Muted tones */
+    --muted: 215 25% 15%;
+    --muted-foreground: 215 15% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    /* Accent colors */
+    --accent: 215 25% 15%;
+    --accent-foreground: 215 20% 95%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    /* Status colors (darker versions) */
+    --success: 142 76% 41%;
+    --warning: 45 93% 52%;
+    --destructive: 0 84% 65%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    /* Border and inputs */
+    --border: 215 25% 18%;
+    --input: 215 25% 15%;
+    --ring: 221 83% 58%;
+
+    /* Custom gradients for dark */
+    --gradient-primary: linear-gradient(135deg, hsl(221 83% 58%), hsl(270 60% 65%));
+    --gradient-secondary: linear-gradient(135deg, hsl(270 60% 65%), hsl(221 83% 58%));
+    --gradient-subtle: linear-gradient(135deg, hsl(215 25% 10%), hsl(221 83% 12%));
+    --gradient-card: linear-gradient(135deg, rgba(30,41,59,0.9), rgba(30,41,59,0.6));
+
+    /* Shadows for dark */
+    --shadow-sm: 0 2px 4px -1px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 12px -2px rgba(0,0,0,0.4);
+    --shadow-lg: 0 10px 24px -4px rgba(0,0,0,0.5);
+    --shadow-primary: 0 8px 24px -4px hsl(221 83% 58% / 0.3);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
