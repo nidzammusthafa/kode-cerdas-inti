@@ -93,24 +93,24 @@ export default function Dashboard() {
     >
       <div className="space-y-6">
         {/* Hero Section */}
-        <div className="relative overflow-hidden rounded-xl bg-gradient-primary p-8 text-white">
+        <div className="relative overflow-hidden rounded-xl bg-gradient-primary p-4 sm:p-6 lg:p-8 text-white">
           <div className="relative z-10">
-            <h2 className="text-3xl font-bold mb-2">Welcome back! 👋</h2>
-            <p className="text-white/80 mb-4">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2">Welcome back! 👋</h2>
+            <p className="text-white/80 mb-4 text-sm sm:text-base">
               Your Facebook business is performing well. Here's your overview for today.
             </p>
-            <div className="flex gap-4">
-              <Button variant="secondary" className="gap-2">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+              <Button variant="secondary" className="gap-2 text-sm">
                 <Plus className="h-4 w-4" />
                 New Post
               </Button>
-              <Button variant="outline" className="gap-2 border-white/20 text-white hover:bg-white/10">
+              <Button variant="outline" className="gap-2 border-white/20 text-white hover:bg-white/10 text-sm">
                 <TrendingUp className="h-4 w-4" />
                 View Analytics
               </Button>
             </div>
           </div>
-          <div className="absolute right-0 top-0 h-full w-1/3 opacity-20">
+          <div className="absolute right-0 top-0 h-full w-1/3 opacity-20 hidden sm:block">
             <img 
               src={heroImage} 
               alt="Dashboard Overview" 
@@ -152,15 +152,18 @@ export default function Dashboard() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {recentPosts.map((post) => (
-                  <div key={post.id} className="p-4 border border-border rounded-lg hover:bg-accent/50 transition-colors">
+                  <div key={post.id} className="p-3 sm:p-4 border border-border rounded-lg hover:bg-accent/50 transition-colors">
                     <div className="flex items-start justify-between mb-3">
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0 pr-2">
                         <p className="text-sm text-foreground line-clamp-2 mb-2">
                           {post.content}
                         </p>
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                          <Clock className="h-3 w-3" />
-                          {post.scheduledFor}
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground flex-wrap">
+                          <div className="flex items-center gap-1">
+                            <Clock className="h-3 w-3" />
+                            <span className="hidden sm:inline">{post.scheduledFor}</span>
+                            <span className="sm:hidden">{post.scheduledFor.split(' ')[1]}</span>
+                          </div>
                           <Badge 
                             variant={post.status === 'published' ? 'default' : 'secondary'} 
                             className="text-xs"
@@ -169,34 +172,39 @@ export default function Dashboard() {
                           </Badge>
                         </div>
                       </div>
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <Button variant="ghost" size="icon" className="h-8 w-8 flex-shrink-0">
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </div>
                     
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                       <div className="flex flex-wrap gap-1">
-                        {post.groups.map((group, idx) => (
+                        {post.groups.slice(0, 2).map((group, idx) => (
                           <Badge key={idx} variant="outline" className="text-xs">
                             {group}
                           </Badge>
                         ))}
+                        {post.groups.length > 2 && (
+                          <Badge variant="outline" className="text-xs">
+                            +{post.groups.length - 2}
+                          </Badge>
+                        )}
                       </div>
                       
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                        <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-2 sm:gap-4 text-xs text-muted-foreground overflow-x-auto">
+                        <div className="flex items-center gap-1 whitespace-nowrap">
                           <Eye className="h-3 w-3" />
                           {post.interactions.views}
                         </div>
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-1 whitespace-nowrap">
                           <Heart className="h-3 w-3" />
                           {post.interactions.likes}
                         </div>
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-1 whitespace-nowrap">
                           <MessageCircle className="h-3 w-3" />
                           {post.interactions.comments}
                         </div>
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-1 whitespace-nowrap">
                           <Share className="h-3 w-3" />
                           {post.interactions.shares}
                         </div>

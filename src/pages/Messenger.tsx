@@ -133,9 +133,9 @@ export default function Messenger() {
       title="Messenger" 
       description="Real-time customer conversations and support"
     >
-      <div className="flex h-[calc(100vh-200px)] gap-6">
+      <div className="flex flex-col lg:flex-row h-[calc(100vh-200px)] gap-4 lg:gap-6">
         {/* Conversations List */}
-        <Card className="w-80 flex flex-col">
+        <Card className="w-full lg:w-80 flex flex-col max-h-96 lg:max-h-none">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-lg">Conversations</CardTitle>
@@ -204,36 +204,36 @@ export default function Messenger() {
             <>
               {/* Chat Header */}
               <CardHeader className="pb-3 border-b border-border">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="relative">
-                      <Avatar className="h-10 w-10">
-                        <AvatarImage src={selectedConversation.avatar} />
-                        <AvatarFallback>{selectedConversation.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                      </Avatar>
-                      {selectedConversation.isOnline && (
-                        <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-success rounded-full border-2 border-white" />
-                      )}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3 min-w-0 flex-1">
+                      <div className="relative">
+                        <Avatar className="h-10 w-10">
+                          <AvatarImage src={selectedConversation.avatar} />
+                          <AvatarFallback>{selectedConversation.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                        </Avatar>
+                        {selectedConversation.isOnline && (
+                          <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-success rounded-full border-2 border-white" />
+                        )}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-semibold truncate">{selectedConversation.name}</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {selectedConversation.isOnline ? 'Online' : 'Last seen 2h ago'}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-semibold">{selectedConversation.name}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {selectedConversation.isOnline ? 'Online' : 'Last seen 2h ago'}
-                      </p>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <Button variant="ghost" size="icon" className="hidden sm:flex">
+                        <Phone className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon" className="hidden sm:flex">
+                        <Video className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="icon">
-                      <Phone className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon">
-                      <Video className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
               </CardHeader>
 
               {/* Messages */}
@@ -255,7 +255,7 @@ export default function Messenger() {
                       </Avatar>
                     )}
                     <div className={cn(
-                      "max-w-[70%] space-y-1",
+                      "max-w-[85%] sm:max-w-[70%] space-y-1",
                       message.isOwn ? "items-end" : "items-start"
                     )}>
                       <div className={cn(
@@ -286,9 +286,9 @@ export default function Messenger() {
               </CardContent>
 
               {/* Message Input */}
-              <div className="p-4 border-t border-border">
+              <div className="p-3 sm:p-4 border-t border-border">
                 <div className="flex items-center gap-2">
-                  <Button variant="ghost" size="icon">
+                  <Button variant="ghost" size="icon" className="hidden sm:flex">
                     <Paperclip className="h-4 w-4" />
                   </Button>
                   <div className="flex-1 relative">
@@ -299,17 +299,18 @@ export default function Messenger() {
                       onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                       className="pr-10"
                     />
-                    <Button variant="ghost" size="icon" className="absolute right-0 top-0">
+                    <Button variant="ghost" size="icon" className="absolute right-0 top-0 hidden sm:flex">
                       <Smile className="h-4 w-4" />
                     </Button>
                   </div>
                   <Button 
                     onClick={handleSendMessage}
                     disabled={!newMessage.trim()}
+                    size="sm"
                     className="gap-2"
                   >
                     <Send className="h-4 w-4" />
-                    Send
+                    <span className="hidden sm:inline">Send</span>
                   </Button>
                 </div>
               </div>

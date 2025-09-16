@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -55,16 +55,30 @@ const sidebarItems = [
 
 interface SidebarProps {
   className?: string;
+  isOpen?: boolean;
+  onClose?: () => void;
+  isMobile?: boolean;
 }
 
-export function Sidebar({ className }: SidebarProps) {
+export function Sidebar({ className, isOpen, onClose, isMobile }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
+
+  // Auto-close sidebar on mobile when route changes
+  React.useEffect(() => {
+    if (isMobile && onClose) {
+      onClose();
+    }
+  }, [location.pathname, isMobile, onClose]);
 
   return (
     <div className={cn(
       "relative flex flex-col h-full bg-gradient-subtle border-r border-border transition-all duration-300",
-      collapsed ? "w-16" : "w-64",
+      // Desktop behavior
+      !isMobile && (collapsed ? "w-16" : "w-64"),
+      // Mobile behavior
+      isMobile && "fixed inset-y-0 left-0 z-50 w-64 transform",
+      isMobile && (isOpen ? "translate-x-0" : "-translate-x-full"),
       className
     )}>
       {/* Header */}
@@ -80,17 +94,29 @@ export function Sidebar({ className }: SidebarProps) {
             </div>
           </div>
         )}
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setCollapsed(!collapsed)}
-          className="h-8 w-8"
-        >
-          <ChevronLeft className={cn(
-            "h-4 w-4 transition-transform",
-            collapsed && "rotate-180"
-          )} />
-        </Button>
+        {!isMobile && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setCollapsed(!collapsed)}
+            className="h-8 w-8"
+          >
+            <ChevronLeft className={cn(
+              "h-4 w-4 transition-transform",
+              collapsed && "rotate-180"
+            )} />
+          </Button>
+        )}
+        {isMobile && onClose && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onClose}
+            className="h-8 w-8"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+        )}
       </div>
 
       {/* Navigation */}
@@ -108,7 +134,7 @@ export function Sidebar({ className }: SidebarProps) {
                 isActive 
                   ? "bg-primary text-primary-foreground shadow-primary" 
                   : "text-muted-foreground hover:text-foreground hover:bg-accent",
-                collapsed && "justify-center px-2"
+                !isMobile && collapsed && "justify-center px-2"
               )}
             >
               <Icon className={cn(
@@ -116,7 +142,7 @@ export function Sidebar({ className }: SidebarProps) {
                 isActive && "text-primary-foreground",
                 !collapsed && "group-hover:scale-110 transition-transform"
               )} />
-              {!collapsed && (
+              {(!collapsed || isMobile) && (
                 <div className="flex-1">
                   <div className="font-medium">{item.label}</div>
                   <div className={cn(
@@ -138,11 +164,11 @@ export function Sidebar({ className }: SidebarProps) {
           to="/settings"
           className={cn(
             "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-all duration-200",
-            collapsed && "justify-center px-2"
+            !isMobile && collapsed && "justify-center px-2"
           )}
         >
           <Settings className="h-5 w-5 flex-shrink-0" />
-          {!collapsed && <span>Settings</span>}
+          {(!collapsed || isMobile) && <span>Settings</span>}
         </Link>
       </div>
     </div>

@@ -27,18 +27,18 @@ export function StatCard({
       "relative overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1",
       className
     )}>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 sm:px-6 pt-4 sm:pt-6">
+        <CardTitle className="text-sm font-medium text-muted-foreground truncate">
           {title}
         </CardTitle>
         {icon && (
-          <div className="h-4 w-4 text-muted-foreground">
+          <div className="h-4 w-4 text-muted-foreground flex-shrink-0 ml-2">
             {icon}
           </div>
         )}
       </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold text-foreground">
+      <CardContent className="px-4 sm:px-6 pb-4 sm:pb-6">
+        <div className="text-xl sm:text-2xl font-bold text-foreground">
           {value}
         </div>
         {description && (

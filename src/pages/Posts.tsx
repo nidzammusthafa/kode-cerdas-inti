@@ -95,34 +95,38 @@ export default function Posts() {
     >
       <div className="space-y-6">
         {/* Actions Bar */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-between">
-          <div className="flex flex-1 items-center gap-4">
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search posts..."
-                className="pl-10"
-              />
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 justify-between">
+            <div className="flex flex-col sm:flex-row flex-1 items-stretch sm:items-center gap-4">
+              <div className="relative flex-1 max-w-md">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search posts..."
+                  className="pl-10"
+                />
+              </div>
+              <div className="flex gap-2">
+                <Select>
+                  <SelectTrigger className="w-32">
+                    <SelectValue placeholder="Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Status</SelectItem>
+                    <SelectItem value="published">Published</SelectItem>
+                    <SelectItem value="scheduled">Scheduled</SelectItem>
+                    <SelectItem value="draft">Draft</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button variant="outline" size="icon">
+                  <Filter className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
-            <Select>
-              <SelectTrigger className="w-32">
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="published">Published</SelectItem>
-                <SelectItem value="scheduled">Scheduled</SelectItem>
-                <SelectItem value="draft">Draft</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button variant="outline" size="icon">
-              <Filter className="h-4 w-4" />
+            <Button variant="gradient" className="gap-2 w-full sm:w-auto">
+              <Plus className="h-4 w-4" />
+              Create Post
             </Button>
           </div>
-          <Button variant="gradient" className="gap-2">
-            <Plus className="h-4 w-4" />
-            Create Post
-          </Button>
         </div>
 
         {/* Posts Grid */}
@@ -136,10 +140,15 @@ export default function Posts() {
                       <Badge variant={getStatusColor(post.status)} className="text-xs capitalize">
                         {post.status}
                       </Badge>
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Clock className="h-3 w-3" />
+                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <Clock className="h-3 w-3" />
+                      <span className="hidden sm:inline">
                         {post.status === 'scheduled' ? 'Scheduled for' : 'Posted'} {post.scheduledFor}
-                      </div>
+                      </span>
+                      <span className="sm:hidden">
+                        {post.scheduledFor.split(' ')[1]}
+                      </span>
+                    </div>
                     </div>
                   </div>
                   <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -185,28 +194,29 @@ export default function Posts() {
                 {/* Interactions */}
                 {post.status !== 'draft' && (
                   <div className="flex items-center justify-between pt-2 border-t border-border">
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                      <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-2 sm:gap-4 text-xs text-muted-foreground overflow-x-auto">
+                      <div className="flex items-center gap-1 whitespace-nowrap">
                         <Eye className="h-3 w-3" />
                         {post.interactions.views}
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 whitespace-nowrap">
                         <Heart className="h-3 w-3" />
                         {post.interactions.likes}
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 whitespace-nowrap">
                         <MessageCircle className="h-3 w-3" />
                         {post.interactions.comments}
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 whitespace-nowrap">
                         <Share className="h-3 w-3" />
                         {post.interactions.shares}
                       </div>
                     </div>
                     
                     {post.status === 'published' && (
-                      <Button variant="outline" size="sm" className="text-xs">
-                        View Post
+                      <Button variant="outline" size="sm" className="text-xs ml-2 flex-shrink-0">
+                        <span className="hidden sm:inline">View Post</span>
+                        <span className="sm:hidden">View</span>
                       </Button>
                     )}
                   </div>

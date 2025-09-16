@@ -152,44 +152,48 @@ export default function Comments() {
     >
       <div className="space-y-6">
         {/* Actions Bar */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-between">
-          <div className="flex flex-1 items-center gap-4">
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search comments..."
-                className="pl-10"
-              />
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 justify-between">
+            <div className="flex flex-col sm:flex-row flex-1 items-stretch sm:items-center gap-4">
+              <div className="relative flex-1 max-w-md">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search comments..."
+                  className="pl-10"
+                />
+              </div>
+              <div className="flex gap-2 flex-wrap">
+                <Select>
+                  <SelectTrigger className="w-32">
+                    <SelectValue placeholder="Relevance" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Comments</SelectItem>
+                    <SelectItem value="relevant">Relevant Only</SelectItem>
+                    <SelectItem value="irrelevant">Spam/Irrelevant</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select>
+                  <SelectTrigger className="w-32">
+                    <SelectValue placeholder="Sentiment" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Sentiment</SelectItem>
+                    <SelectItem value="positive">Positive</SelectItem>
+                    <SelectItem value="neutral">Neutral</SelectItem>
+                    <SelectItem value="negative">Negative</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button variant="outline" size="icon">
+                  <Filter className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
-            <Select>
-              <SelectTrigger className="w-32">
-                <SelectValue placeholder="Relevance" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Comments</SelectItem>
-                <SelectItem value="relevant">Relevant Only</SelectItem>
-                <SelectItem value="irrelevant">Spam/Irrelevant</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select>
-              <SelectTrigger className="w-32">
-                <SelectValue placeholder="Sentiment" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Sentiment</SelectItem>
-                <SelectItem value="positive">Positive</SelectItem>
-                <SelectItem value="neutral">Neutral</SelectItem>
-                <SelectItem value="negative">Negative</SelectItem>
-              </SelectContent>
-            </Select>
-            <Button variant="outline" size="icon">
-              <Filter className="h-4 w-4" />
+            <Button variant="gradient" className="gap-2 w-full sm:w-auto">
+              <Bot className="h-4 w-4" />
+              Run Auto-Comment
             </Button>
           </div>
-          <Button variant="gradient" className="gap-2">
-            <Bot className="h-4 w-4" />
-            Run Auto-Comment
-          </Button>
         </div>
 
         {/* Summary Cards */}
